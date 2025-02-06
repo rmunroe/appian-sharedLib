@@ -4,26 +4,45 @@ plugins {
 }
 
 group = 'com.appiancorp.solutionsconsulting.shared'
-version = '1.0-SNAPSHOT'
+version = '1.0.0'
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
             from components.java
+
+            pom {
+                name = 'appian-sharedlib'
+                description = 'Shared code library for Appian plugins'
+                url = 'https://github.com/rmunroe/appian-sharedlib'
+
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+
+                scm {
+                    connection = 'scm:git:git://github.com/rmunroe/appian-sharedlib.git'
+                    developerConnection = 'scm:git:ssh://github.com/rmunroe/appian-sharedlib.git'
+                    url = 'https://github.com/rmunroe/appian-sharedlib'
+                }
+            }
         }
     }
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/rmunroe/appian-sharedLib")
-
+            url = uri("https://maven.pkg.github.com/rmunroe/appian-sharedlib")
             credentials {
-                username = project.findProperty("gpr.user")
-                password = project.findProperty("gpr.key")
+                username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_ACTOR")
+                password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
             }
         }
     }
 }
+
 
 
 
